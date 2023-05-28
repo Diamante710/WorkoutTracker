@@ -34,7 +34,6 @@ GraphQL
 Node.js
 Express.js
 JWT Authentication
-Chakra UI
 ```
 
 ## <a name="Screenshot"></a>Screenshot
