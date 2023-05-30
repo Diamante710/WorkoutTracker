@@ -5,11 +5,11 @@ const NavTabs = () => {
   const [redirectTo, setRedirectTo] = useState(null);
 
   const handleSignIn = () => {
-    setRedirectTo('/user-homepage');
+    setRedirectTo('/UserHomepage');
   };
 
   const handleSignUp = () => {
-    setRedirectTo('/user-homepage');
+    setRedirectTo('/SignupForm');
   };
 
   if (redirectTo) {

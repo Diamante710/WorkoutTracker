@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './Header';
-import NavTabs from './NavTabs';
-import SignupForm from './SignupForm';
-import UserHomepage from './UserHomepage';
-import Footer from './Footer';
+import Header from './components/Header';
+import NavTabs from './components/NavTabs';
+import SignupForm from '../src/components/SignupForm';
+import UserHomepage from '../src/components/UserHomepage';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -14,8 +14,8 @@ const App = () => {
         <NavTabs />
 
         <Switch>
-          <Route path="/signupform" component={SignupForm} />
-          <Route path="/user-homepage" component={UserHomepage} />
+          <Route path="/SignupForm" component={SignupForm} />
+          <Route path="/UserHomepage" component={UserHomepage} />
         </Switch>
 
         <Footer />
