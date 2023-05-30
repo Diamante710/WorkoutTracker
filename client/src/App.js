@@ -1,37 +1,27 @@
 import React from 'react';
-// import  from '../src/pages/';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom';
+import Header from './components/Header';
+import NavTabs from './components/NavTabs';
+import SignupForm from '../src/components/SignupForm';
+import UserHomepage from '../src/components/UserHomepage';
+import Footer from './components/Footer';
 
-const client = new ApolloClient({
-  uri: "/graphql",
-  cache: new InMemoryCache(),
-});
-
-function App() {
+const App = () => {
   return (
-    <ApolloProvider client={client}>
     <Router>
-      <>
+      <div>
+        <Header />
+        <NavTabs />
+
         <Routes>
-          <Route
-            path='/'
-            element={}
-          />
-          <Route
-            path='/saved'
-            element={}
-          />
-          <Route
-            path='*'
-            element={<h1 className="display-2">Wrong Page!</h1>}
-          />
+          <Route path="/SignupForm" component={SignupForm} />
+          <Route path="/UserHomepage" component={UserHomepage} />
         </Routes>
-      </>
+
+        <Footer />
+      </div>
     </Router>
-    </ApolloProvider>
   );
-}
+};
 
 export default App;
-
