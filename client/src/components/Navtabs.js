@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const NavTabs = () => {
-  const [redirectTo, setRedirectTo] = useState(null);
+  const [navigateTo, setNavigateTo] = useState(null);
 
   const handleSignIn = () => {
-    setRedirectTo('/UserHomepage');
+    setNavigateTo('/UserHomepage');
   };
 
   const handleSignUp = () => {
-    setRedirectTo('/SignupForm');
+    setNavigateTo('/SignupForm');
   };
 
-  if (redirectTo) {
-    return <Redirect to={redirectTo} />;
+  if (navigateTo) {
+    return <Navigate to={navigateTo} />;
   }
 
   return (

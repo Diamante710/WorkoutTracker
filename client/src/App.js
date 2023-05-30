@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import NavTabs from './components/NavTabs';
 import SignupForm from '../src/components/SignupForm';
@@ -13,10 +13,10 @@ const App = () => {
         <Header />
         <NavTabs />
 
-        <Switch>
+        <Routes>
           <Route path="/SignupForm" component={SignupForm} />
           <Route path="/UserHomepage" component={UserHomepage} />
-        </Switch>
+        </Routes>
 
         <Footer />
       </div>
