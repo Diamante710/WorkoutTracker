@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.11.0",
     "apollo-server-express": "^2.19.2",
     "if-env": "^1.0.4",
     "react-router-dom": "^5.3.4"
