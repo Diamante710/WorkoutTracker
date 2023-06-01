@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import schema from Book.js
-const bookSchema = require('./Book');
+const workoutSchema = require('./Workout');
 
 const userSchema = new Schema(
   {
@@ -21,6 +21,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    savedWorkouts: [workoutSchema],
   },
   {
     toJSON: {

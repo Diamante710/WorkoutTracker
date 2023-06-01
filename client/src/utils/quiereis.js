@@ -9,10 +9,14 @@ export const QUERY_ME = gql`
       password
       savedWorkouts {
         workoutId
-        title
-        weight
+        name
         reps
-      }
+        goal reps
+        weight
+        goal weight
+        sets
+      
     }
   }
 `;
+

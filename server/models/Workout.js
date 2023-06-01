@@ -5,16 +5,25 @@ const workoutSchema = new Schema({
         type: String,
         required: true,
       },
-    title: {
+    name: {
         type: String,
         required: true,
     },
     weight: {
         type: String,
     },
+    goalWeight: {
+        type: String,
+    },
     reps: {
         type: String,
     },
+    goalReps: {
+        type: String,
+    },
+    sets: {
+        type: String,
+    }
 });
 
 module.exports = workoutSchema;

@@ -1,4 +1,5 @@
 const { User } = require('../models/User');
+const { Workout } = require('../models/Workout');
 const { AuthenthicationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -34,14 +35,18 @@ const resolvers = {
 
         addWorkout: async (parent, args, context) => {
             if (context.user) {
-                const updatedUser = await User.findOneAndUpdate();
-                return updatedUser;
+                const workout = await Workout.create(args);
+                return { workout };
             };
         },
 
         editWorkout: async (parent, args, context) => {
             if (context.user) {
-                const updatedUser = await User.findOneAndUpdate();
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $push: { savedWorkouts: args }},
+                    { new: true }
+                );
                 return updatedUser;
             };
         },
@@ -50,7 +55,7 @@ const resolvers = {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $push: { savedWorkouts: args } },
+                    { $push: { savedWorkouts: args }},
                     { new: true }
                 );
                 return updatedUser;
@@ -61,11 +66,10 @@ const resolvers = {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { savedWorkouts: args } },
+                    { $pull: { savedWorkouts: args }},
                     { new: true }
                 );
                 return updatedUser;
-
             }
         }
     }
