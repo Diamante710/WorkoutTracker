@@ -7,6 +7,16 @@ export const QUERY_ME = gql`
       username
       email
       password
+      savedWorkouts {
+        workoutId
+        name
+        reps
+        goal reps
+        weight
+        goal weight
+        sets
+      
     }
   }
 `;
+
