@@ -1,7 +1,7 @@
 // see SignupForm.js for comments
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { css } from '@emotion/react';
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
 
@@ -19,7 +19,6 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -42,15 +41,38 @@ const LoginForm = () => {
     });
   };
 
+  const formStyle = css`
+  `;
+
+  const labelStyle = css`
+  `;
+
+  const inputStyle = css`
+  `;
+
+  const feedbackStyle = css`
+  `;
+
+  const buttonStyle = css`
+  `;
+
+  const alertStyle = css`
+  `;
+
   return (
     <>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          Something went wrong with your login credentials!
-        </Alert>
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='email'>Email</Form.Label>
-          <Form.Control
+      <form css={formStyle} noValidate onSubmit={handleFormSubmit}>
+        {showAlert && (
+          <div css={alertStyle} onClose={() => setShowAlert(false)} role='alert'>
+            Something went wrong with your login credentials!
+          </div>
+        )}
+        <div>
+          <label css={labelStyle} htmlFor='email'>
+            Email
+          </label>
+          <input
+            css={inputStyle}
             type='text'
             placeholder='Your email'
             name='email'
@@ -58,12 +80,15 @@ const LoginForm = () => {
             value={userFormData.email}
             required
           />
-          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
-        </Form.Group>
+          <div css={feedbackStyle}>Email is required!</div>
+        </div>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='password'>Password</Form.Label>
-          <Form.Control
+        <div>
+          <label css={labelStyle} htmlFor='password'>
+            Password
+          </label>
+          <input
+            css={inputStyle}
             type='password'
             placeholder='Your password'
             name='password'
@@ -71,15 +96,17 @@ const LoginForm = () => {
             value={userFormData.password}
             required
           />
-          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-        </Form.Group>
-        <Button
+          <div css={feedbackStyle}>Password is required!</div>
+        </div>
+
+        <button
+          css={buttonStyle}
           disabled={!(userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+        >
           Submit
-        </Button>
-      </Form>
+        </button>
+      </form>
     </>
   );
 };
