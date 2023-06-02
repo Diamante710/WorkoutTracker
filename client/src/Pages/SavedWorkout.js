@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {css} from '@emotion/react';
-import {auth} from '../utils/auth'
+import {Auth} from '../utils/auth'
 import styled from '@emotion/styled'
 
 
