@@ -34,11 +34,12 @@ export const SAVE_WORKOUT = gql`
         workoutId
         name
        reps
-       goal reps
+       goalReps
        weight
-        goal weight
+        goalWeight
         sets
       }
+    }
     }`
   ;
 
@@ -52,12 +53,13 @@ export const REMOVE_WORKOUT = gql`
         workoutId
         name
        reps
-       goal reps
+       goalReps
        weight
-        goal weight
+        goalWeight
         sets
       }
-    }`
+    }
+  }`
   ;
 
 export const ADD_WORKOUT = gql`
@@ -70,12 +72,13 @@ export const ADD_WORKOUT = gql`
         workoutId
         name
        reps
-       goal reps
+       goalReps
        weight
-        goal weight
+        goalWeight
         sets
       }
-    }`
+    }
+  }`
   ;
 
   export const EDIT_WORKOUT = gql`
@@ -88,10 +91,11 @@ export const ADD_WORKOUT = gql`
         workoutId
         name
        reps
-       goal reps
+       goalReps
        weight
-        goal weight
+        goalWeight
         sets
       }
-    }`
+    }
+  }`
   ;

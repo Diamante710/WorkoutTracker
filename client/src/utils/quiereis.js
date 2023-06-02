@@ -11,12 +11,12 @@ export const QUERY_ME = gql`
         workoutId
         name
         reps
-        goal reps
+        goalReps
         weight
-        goal weight
+        goalWeight
         sets
-      
     }
   }
+}
 `;
 
