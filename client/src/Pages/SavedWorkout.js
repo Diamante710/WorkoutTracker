@@ -1,72 +1,164 @@
-import React, { useEffect, useState } from 'react';
-import { REMOVE_WORKOUT } from "../utils/mutations";
-import { QUERY_ME } from "../utils/queries";
-import { removeWorkoutId } from '../utils/localStorage';
-import { useQuery, useMutation } from "@apollo/client";
-import Auth from '../utils/auth';
+import { useState, useEffect } from "react";
+import {css} from '@emotion/react';
+import {auth} from '../utils/auth'
+import styled from '@emotion/styled'
 
-const SavedWorkouts = () => {
-  const { loading, data } = useQuery(QUERY_ME);
-  const [removeWorkout, { error }] = useMutation(REMOVE_WORKOUT);
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleRemoveWorkout = async (bookId) => {
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+const Color = 'blue'
 
-    if (!token) {
-      return false;
-    }
+render(
+    <div
+      css={css`
+        padding: 32px;
+        background-color: hotpink;
+        font-size: 24px;
+        border-radius: 4px;
+        &:hover {
+          color: ${Color};
+        }
+      `}
+    >
+      Hover to change color.
+    </div>
+)
 
-    try {
-      const { data } = await removeWorkout({
-        variables: { workoutId },
-      });
 
-      removeWorkoutId(workoutId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
-  // if data isn't here yet, say so
-  if (loading) {
-    return <h2>LOADING...</h2>;
+const Button = styled.button`
+  padding: 32px;
+  background-color: hotpink;
+  font-size: 24px;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
+  &:hover {
+    color: white;
   }
+`
 
-  return (
-    <>
-      <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Viewing {data?.me.username}'s saved Workouts!</h1>
-        </Container>
-      </div>
-      <Container>
-        <h2 className='pt-5'>
-          {data?.me.savedWorkouts.length
-            ? `Viewing ${data?.me.savedWorkouts.length} saved ${data?.me.savedWorkouts.length === 1 ? 'book' : 'Workouts'}:`
-            : 'You have no saved Workouts!'}
+render(<Button>This my button component.</Button>)
+
+const savedWorkout = () => {
+    const [userdata, setUserdata] = useState({})
+
+    const userdatalegnth = Object.keys(userdata).length;
+    useEffect(() => {
+        const getUserData = async () => {
+          try {
+            const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
+            if (!token) {
+              return false;
+            }
+    
+            const response = await getMe(token);
+    
+            if (!response.ok) {
+              throw new Error('something went wrong!');
+            }
+    
+            const user = await response.json();
+            setUserData(user);
+          } catch (err) {
+            console.error(err);
+          }
+        };
+    
+        getUserData();
+      }, [userDataLength]);
+
+
+
+
+
+    const handleDeleteWorkout = async (workoutId) => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const response = await deleteWorkout(workoutId, token);
+
+            if (!response.ok) {
+                throw new Error('something went wrong!');
+            }
+
+            const updatedUser = await response.json();
+            setUserData(updatedUser);
+            // upon success, remove item from localStorage
+            localStorage.removeItem('workoutId');
+            removeWorkoutId();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    if (!userDataLength) {
+        return <h2>LOADING...</h2>;
+    }
+
+    const Section = styled.section`
+        background-color: #efefef;
+        padding: 10px 0;
+        margin: 0 auto;
+        max-width: 960px;
+    `;
+
+    const Row = styled.row`
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0 5px;
+    `;
+
+    return (
+        render(
+        <div className="flex-row justify-center mb-3">
+            <Section>
+            <h1>Viewing {userData.username}'s workout!</h1>
+            </Section>
+        </div>
+        ),
+        <h2 className="flex-row justify-center mb-3">
+            {userData.savedWorkouts.length
+            ? `Viewing ${userData.savedWorkouts.length} saved ${userData.savedWorkouts.length === 1 ? 'workout' : 'workouts'}:`
+            : 'You have no saved workouts!'}
         </h2>
+        ),
         <Row>
-          {data?.me.savedWorkouts.map((book) => {
-            return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
-                  <Card.Body>
-                    <Card.Title>{workout.name}</Card.Title>
-                    <Card.Text>{workout.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleRemoveWorkout(book.bookId)}>
-                      Delete this Workout!
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+            {userData.savedWorkouts.map((workout) => {
+                return (
+                    <Card key={workout._id} border='dark'>
+                        <Card.Header>
+                            <h3>{workout.name}</h3>
+                            <div>
+                                {workout.exercises.map((exercise) => {
+                                    return (
+                                        <p key={exercise._id} className="card-body">
+                                            {exercise.name} <br />
+                                            {exercise.sets} <br />
+                                            {exercise.reps} <br />
+                                            {exercise.weight} <br />
+                                            {exercise.duration} <br />
+                                            {exercise.distance} <br />
+                                        </p>
+                                    );
+                                })}
+                            </div>
+                            <Button
+                                className="btn-block btn-danger"
+                                onClick={() => handleDeleteWorkout(workout._id)}
+                            >
+                                Delete this Workout!
+                            </Button>
+                        </Card.Header>
+                    </Card>
+                );
+            })}
         </Row>
-      </Container>
-    </>
-  );
 };
 
-export default SavedWorkouts;
+export default savedWorkout;
