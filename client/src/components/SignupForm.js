@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { css } from '@emotion/react';
 import { CREATE_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
@@ -21,7 +21,6 @@ const SignupForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -44,18 +43,42 @@ const SignupForm = () => {
     });
   };
 
+  const formStyle = css`
+  `;
+
+  const groupStyle = css`
+  `;
+
+  const labelStyle = css`
+  `;
+
+  const inputStyle = css`
+  `;
+
+  const feedbackStyle = css`
+ `;
+
+  const buttonStyle = css`
+  `;
+
+  const alertStyle = css`
+  `;
+
   return (
     <>
-      {/* This is needed for the validation functionality above */}
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {/* show alert if server response is bad */}
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          Something went wrong with your signup!
-        </Alert>
+      <form css={formStyle} noValidate validated={validated} onSubmit={handleFormSubmit}>
+        {showAlert && (
+          <div css={alertStyle}>
+            Something went wrong with your signup!
+          </div>
+        )}
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='username'>Username</Form.Label>
-          <Form.Control
+        <div css={groupStyle} className='mb-3'>
+          <label css={labelStyle} htmlFor='username'>
+            Username
+          </label>
+          <input
+            css={inputStyle}
             type='text'
             placeholder='Your username'
             name='username'
@@ -63,12 +86,17 @@ const SignupForm = () => {
             value={userFormData.username}
             required
           />
-          <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
-        </Form.Group>
+          <div css={feedbackStyle} className='invalid-feedback'>
+            Username is required!
+          </div>
+        </div>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='email'>Email</Form.Label>
-          <Form.Control
+        <div css={groupStyle} className='mb-3'>
+          <label css={labelStyle} htmlFor='email'>
+            Email
+          </label>
+          <input
+            css={inputStyle}
             type='email'
             placeholder='Your email address'
             name='email'
@@ -76,12 +104,17 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
-        </Form.Group>
+          <div css={feedbackStyle} className='invalid-feedback'>
+            Email is required!
+          </div>
+        </div>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='password'>Password</Form.Label>
-          <Form.Control
+        <div css={groupStyle} className='mb-3'>
+          <label css={labelStyle} htmlFor='password'>
+            Password
+          </label>
+          <input
+            css={inputStyle}
             type='password'
             placeholder='Your password'
             name='password'
@@ -89,15 +122,19 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
-          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-        </Form.Group>
-        <Button
+          <div css={feedbackStyle} className='invalid-feedback'>
+            Password is required!
+          </div>
+        </div>
+
+        <button
+          css={buttonStyle}
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+        >
           Submit
-        </Button>
-      </Form>
+        </button>
+      </form>
     </>
   );
 };
