@@ -1,3 +1,24 @@
+const url = 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=${query}';
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': 'ht7xFqiZDRLSRN/SdsB9qw==nnDAeZ8CPMRhW4Cg',
+    'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+  }
+};
+
+fetch(url, options)
+  .then(response => response.text())
+  .then(result => {
+    console.log(result);
+  })
+  .catch(error => {
+    console.error(error);
+});
+
+
+
+
 export const getMe = token => {
     return fetch('/api/users/me', {
         headers: {
@@ -47,5 +68,3 @@ export const deleteWorkout = (workoutId, token) => {
     });
 };
 
-// export const searchWorkouts = (query) => {
-//     return fetch 
