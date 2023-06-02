@@ -1,29 +1,34 @@
-const { Schema } = require('mongoose');
-
-const workoutSchema = new Schema({
-    workoutId: {
-        type: String,
-        required: true,
-      },
+const {Schema} = require('mongoose')
+const workoutSchema = new Schema ({
     name: {
         type: String,
         required: true,
+
     },
     weight: {
-        type: String,
+        type: Number,
+        required: true,
+        default: 0,
     },
     goalWeight: {
-        type: String,
+        type: Number,
+        required: true,
+        default: 0,
     },
     reps: {
-        type: String,
+        type: Number,
+        required: true,
+        default: 0
     },
     goalReps: {
-        type: String,
+        type: Number,
+        required: true,
+        default: 0
     },
-    sets: {
-        type: String,
-    }
-});
+    
+
+},{
+    timestamps: true
+})
 
 module.exports = workoutSchema;

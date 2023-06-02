@@ -51,22 +51,22 @@ const resolvers = {
             };
         },
 
-        saveWorkout: async (parent, args, context) => {
+        saveWorkout: async (parent, { workoutData }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $push: { savedWorkouts: args }},
+                    { $push: { savedWorkouts: workoutData }},
                     { new: true }
                 );
                 return updatedUser;
             };
         },
         
-        removeWorkout: async (parent, args, context) => {
+        removeWorkout: async (parent, workoutId, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { savedWorkouts: args }},
+                    { $pull: { savedWorkouts: { workoutId } }},
                     { new: true }
                 );
                 return updatedUser;
