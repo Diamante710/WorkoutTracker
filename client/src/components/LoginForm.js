@@ -96,8 +96,10 @@ const LoginForm = () => {
             value={userFormData.password}
             required
           />
+          </div>
+          {error ? (
           <div css={feedbackStyle}>Password is required!</div>
-        </div>
+        ) : null}
 
         <button
           css={buttonStyle}

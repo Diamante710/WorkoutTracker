@@ -21,7 +21,7 @@ const NavTabs = () => {
       <h2>Navigation Tabs</h2>
       <ul>
         <li>
-          <button onClick={handleSignIn}>Sign In</button>
+          <button onClick={handleSignIn}>Login</button>
         </li>
         <li>
           <button onClick={handleSignUp}>Sign Up</button>
