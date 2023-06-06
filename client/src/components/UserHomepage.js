@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Header from '../components/Header';
+// import Footer from '../components/Footer';
+
 const UserHomepage = () => {
   const [exercises, setExercises] = useState([]);
   const [name, setName] = useState('');
@@ -33,7 +34,7 @@ const UserHomepage = () => {
   };
 
   return (
-    <Header />,
+    // <Header />,
     <div>
       <h2>Welcome to the User Homepage</h2>
       <div>
@@ -154,8 +155,9 @@ const UserHomepage = () => {
           </tbody>
         </table>
       </div>
-    </div>,
-    <Footer />
+    </div>
+    // <Header />,
+    // <Footer />
   );
 };
 

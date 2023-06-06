@@ -4,14 +4,15 @@ import { CREATE_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 
+
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
-  const [validated] = useState(false);
+  const [validated] = useState('false');
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  const [ addUser ] = useMutation(CREATE_USER)
+  const [ createUser ] = useMutation(CREATE_USER)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,7 +29,7 @@ const SignupForm = () => {
     }
 
     try {
-      const { data } = await addUser({variables: {...userFormData}});
+      const { data } = await createUser({variables: {...userFormData}});
       console.log(data)
       Auth.login(data.createUser.token);
     } catch (err) {
@@ -86,9 +87,9 @@ const SignupForm = () => {
             value={userFormData.username}
             required
           />
-          <div css={feedbackStyle} className='invalid-feedback'>
+          {/* <div css={feedbackStyle} className='invalid-feedback'>
             Username is required!
-          </div>
+          </div> */}
         </div>
 
         <div css={groupStyle} className='mb-3'>
@@ -104,9 +105,9 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-          <div css={feedbackStyle} className='invalid-feedback'>
+          {/* <div css={feedbackStyle} className='invalid-feedback'>
             Email is required!
-          </div>
+          </div> */}
         </div>
 
         <div css={groupStyle} className='mb-3'>
@@ -122,9 +123,9 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
-          <div css={feedbackStyle} className='invalid-feedback'>
+          {/* <div css={feedbackStyle} className='invalid-feedback'>
             Password is required!
-          </div>
+          </div> */}
         </div>
 
         <button
