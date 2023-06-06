@@ -11,14 +11,15 @@ type User {
 }
 
 type Workout {
-    _Id: ID!
-    name: String!
-    reps: Number!
-    goal reps: Number!
-    weight: Number!
-    goal weight: Number!
-    sets: Number!
+  _id: ID!
+  name: String!
+  reps: Int!
+  goalReps: Int!
+  weight: Float!
+  goalWeight: Float!
+  sets: Int!
 }
+
 
 type Auth {
     token: ID!

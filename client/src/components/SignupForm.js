@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import { CREATE_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
@@ -11,7 +11,7 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  const [ addUser, {error} ] = useMutation(CREATE_USER)
+  const [ addUser ] = useMutation(CREATE_USER)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

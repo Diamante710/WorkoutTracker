@@ -62,11 +62,11 @@ const resolvers = {
             };
         },
         
-        removeWorkout: async (parent, workoutId, context) => {
+        removeWorkout: async (parent, workoutid, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { savedWorkouts: { workoutId } }},
+                    { $pull: { savedWorkouts: { workoutid } }},
                     { new: true }
                 );
                 return updatedUser;
