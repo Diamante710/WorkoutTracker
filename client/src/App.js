@@ -6,7 +6,6 @@ import SignupForm from './components/SignupForm';
 import LoginForm from './components/LoginForm';
 import UserHomepage from './components/UserHomepage';
 import { ApolloClient,InMemoryCache, ApolloProvider } from '@apollo/client';
-// import { ThemeProvider, Global } from '@emotion/react';
 
 
 const client = new ApolloClient({
