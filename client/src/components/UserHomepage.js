@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import Header from '../components/Header';
-// import Footer from '../components/Footer';
 
 const UserHomepage = () => {
   const [exercises, setExercises] = useState([]);
@@ -34,7 +32,6 @@ const UserHomepage = () => {
   };
 
   return (
-    // <Header />,
     <div>
       <h2>Welcome to the User Homepage</h2>
       <div>
@@ -94,13 +91,13 @@ const UserHomepage = () => {
         <h3>Exercise List</h3>
         <table>
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>Reps Achieved</th>
-              <th>Goal Reps</th>
-              <th>Weight Achieved</th>
-              <th>Goal Weight</th>
-            </tr>
+            <ol>
+              <li>Name</li>
+              <li>Reps Achieved</li>
+              <li>Goal Reps</li>
+              <li>Weight Achieved</li>
+              <li>Goal Weight</li>
+            </ol>
           </thead>
           <tbody>
             {exercises.map((exercise, index) => (
@@ -156,8 +153,6 @@ const UserHomepage = () => {
         </table>
       </div>
     </div>
-    // <Header />,
-    // <Footer />
   );
 };
 

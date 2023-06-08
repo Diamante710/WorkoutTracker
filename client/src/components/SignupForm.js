@@ -6,13 +6,9 @@ import { useMutation } from '@apollo/client';
 
 
 const SignupForm = () => {
-  // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-  // set state for form validation
-  const [validated] = useState('false');
-  // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  const [ createUser ] = useMutation(CREATE_USER)
+  const [createUser] = useMutation(CREATE_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -22,52 +18,50 @@ const SignupForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
     try {
-      const { data } = await createUser({variables: {...userFormData}});
-      console.log(data)
+      const { data } = await createUser({ variables: { ...userFormData } });
+      console.log(data);
       Auth.login(data.createUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
 
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
+    setUserFormData({ username: '', email: '', password: '' });
   };
 
   const formStyle = css`
+    color: red;
   `;
 
   const groupStyle = css`
+    color: red;
   `;
 
   const labelStyle = css`
+    color: red;
   `;
 
   const inputStyle = css`
+    color: red;
   `;
 
   const feedbackStyle = css`
- `;
+    color: red;
+    display: ${!userFormData.username && showAlert ? 'block' : 'none'};
+  `;
 
   const buttonStyle = css`
+    color: blue;
   `;
 
   const alertStyle = css`
+    color: red;
   `;
 
   return (
     <>
-      <form css={formStyle} noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <form css={formStyle} noValidate onSubmit={handleFormSubmit}>
         {showAlert && (
           <div css={alertStyle}>
             Something went wrong with your signup!
@@ -87,9 +81,11 @@ const SignupForm = () => {
             value={userFormData.username}
             required
           />
-          {/* <div css={feedbackStyle} className='invalid-feedback'>
-            Username is required!
-          </div> */}
+          {(!userFormData.username && showAlert) && (
+            <div css={feedbackStyle} className='invalid-feedback'>
+              Username is required!
+            </div>
+          )}
         </div>
 
         <div css={groupStyle} className='mb-3'>
@@ -105,9 +101,7 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-          {/* <div css={feedbackStyle} className='invalid-feedback'>
-            Email is required!
-          </div> */}
+          {/* Add validation feedback here if needed */}
         </div>
 
         <div css={groupStyle} className='mb-3'>
@@ -123,9 +117,7 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
-          {/* <div css={feedbackStyle} className='invalid-feedback'>
-            Password is required!
-          </div> */}
+          {/* Add validation feedback here if needed */}
         </div>
 
         <button
@@ -141,3 +133,4 @@ const SignupForm = () => {
 };
 
 export default SignupForm;
+
