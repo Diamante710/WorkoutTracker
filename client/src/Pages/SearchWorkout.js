@@ -4,6 +4,7 @@ import { SAVE_WORKOUT } from "../utils/mutations";
 import { css } from '@emotion/react';
 import { getWorkoutIds, saveWorkoutIds } from '../utils/localStorage';
 import Auth from '../utils/auth';
+import { GET_BICEPS_EXERCISES } from '../utils/queries';
 
 
 const SearchWorkouts = () => {
@@ -16,6 +17,8 @@ const SearchWorkouts = () => {
   const [workoutIds, setWorkoutIds] = useState(getWorkoutIds());
   
   const [saveWorkout, { error }] = useMutation(SAVE_WORKOUT);
+
+  const { data: bicepsData } = useQuery(GET_BICEPS_EXERCISES);
   
   useEffect(() => {
     return () => saveWorkoutIds(workoutIds);
