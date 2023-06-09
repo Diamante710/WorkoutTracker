@@ -1,5 +1,4 @@
-// see SignupForm.js for comments
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { css } from '@emotion/react';
 import { LOGIN_USER } from "../utils/mutations";
@@ -7,9 +6,8 @@ import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [ loginUser, {error} ] = useMutation(LOGIN_USER)
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -19,44 +17,39 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
     try {
-      const { data } = await loginUser({variables: {...userFormData}});
-      console.log(data)
+      const { data } = await loginUser({ variables: { ...userFormData } });
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
 
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
+    setUserFormData({ email: '', password: '' });
   };
 
   const formStyle = css`
+    // Add your form styles here
   `;
 
   const labelStyle = css`
+    // Add your label styles here
   `;
 
   const inputStyle = css`
+    // Add your input styles here
   `;
 
   const feedbackStyle = css`
+    // Add your feedback styles here
   `;
 
   const buttonStyle = css`
+    // Add your button styles here
   `;
 
   const alertStyle = css`
+    // Add your alert styles here
   `;
 
   return (
@@ -67,20 +60,21 @@ const LoginForm = () => {
             Something went wrong with your login credentials!
           </div>
         )}
+
         <div>
           <label css={labelStyle} htmlFor='email'>
             Email
           </label>
           <input
             css={inputStyle}
-            type='text'
+            type='email'
             placeholder='Your email'
             name='email'
             onChange={handleInputChange}
             value={userFormData.email}
             required
           />
-          <div css={feedbackStyle}>Email is required!</div>
+          {/* <div css={feedbackStyle}>Email is required!</div> */}
         </div>
 
         <div>
@@ -96,10 +90,8 @@ const LoginForm = () => {
             value={userFormData.password}
             required
           />
-          </div>
-          {error ? (
-          <div css={feedbackStyle}>Password is required!</div>
-        ) : null}
+          {error && <div css={feedbackStyle}>Password is required!</div>}
+        </div>
 
         <button
           css={buttonStyle}

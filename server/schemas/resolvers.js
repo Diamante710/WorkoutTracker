@@ -2,6 +2,8 @@ const { User } = require('../models');
 const { Workout } = require('../models/Workout');
 const { AuthenthicationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
+const fetch = require('node-fetch');
+
 
 const resolvers = {
     Query: {
@@ -12,6 +14,27 @@ const resolvers = {
             throw new AuthenthicationError("Not logged in");
         },
     },
+
+    getBicepsExercises: async () => {
+        const url = `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=biceps`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+          'X-RapidAPI-Host': process.env.RAPIDAPI_HOST
+          }
+        };
+  
+        try {
+          const response = await fetch(url, options);
+          const result = await response.text();
+          return JSON.parse(result); // Assuming the response is JSON
+        } catch (error) {
+          console.error(error);
+          throw new Error('Failed to fetch biceps exercises');
+        }
+      },
+    
 
     Mutation: {
         createUser: async (parent, args) => {

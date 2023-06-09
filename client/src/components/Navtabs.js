@@ -5,7 +5,7 @@ const NavTabs = () => {
   const [navigateTo, setNavigateTo] = useState(null);
 
   const handleSignIn = () => {
-    setNavigateTo('/UserHomepage');
+    setNavigateTo('/LoginForm');
   };
 
   const handleSignUp = () => {
