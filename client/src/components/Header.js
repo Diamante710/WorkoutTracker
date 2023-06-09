@@ -1,5 +1,5 @@
 import React from 'react';
-import {css} from '@emotion/react';
+import {css} from '@emotion/css';
 
 const headerStyle = css`
   background-color: #333;
@@ -12,8 +12,8 @@ const headerStyle = css`
 
 const Header = () => {
   return (
-    <header css={headerStyle}>
-      <h1 Heading>Workout Tracker</h1>
+    <header className={headerStyle}>
+      <h1>Workout Tracker</h1>
     </header>
   );
 };

@@ -4,10 +4,11 @@ const typeDefs = gql`
 
 type User {
   _id: ID!
+  username: String!
   email: String!
   password: String!
   savedWorkouts: [Workout]
-  workoutFrequency: Number
+  workoutFrequency: Int
 }
 
 type Workout {
@@ -20,6 +21,13 @@ type Workout {
   sets: Int!
 }
 
+input WorkoutData {
+  name: String!
+  reps: Int!
+  goalReps: Int!
+  weight: Float!
+  goalWeight: Float!
+}
 
 type Auth {
     token: ID!
@@ -36,7 +44,8 @@ type Mutation {
     addWorkout(workoutData: WorkoutData!): User
     editWorkout(workoutData: WorkoutData!): User
     saveWorkout(workoutData: WorkoutData!): User
-    deleteWorkout(workoutId: ID!): User
+    removeWorkout(workoutId: ID!): User
+  }
 `;
 
 module.exports = typeDefs;
