@@ -1,4 +1,4 @@
-const { User } = require('../models/User');
+const { User } = require('../models');
 const { Workout } = require('../models/Workout');
 const { AuthenthicationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
@@ -38,9 +38,20 @@ const resolvers = {
 
     Mutation: {
         createUser: async (parent, args) => {
-            const user = await User.create(args);
-            const token = signToken(user);
-            return { token, user };
+            // console.log(args)
+            try {
+                const user = await User.create(args);
+                const token = signToken(user);
+                console.log(token, user)
+                return { token, user };
+            }
+            catch (err) {
+                console.log(err)
+            }
+            // const user = await User.create(args);
+            // const token = signToken(user);
+            // console.log(token, user)
+            // return { token, user };
         },
 
         login: async (parent, { email, password }) => {

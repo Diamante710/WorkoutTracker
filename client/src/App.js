@@ -14,6 +14,7 @@ const client = new ApolloClient({
 
 const App = () => {
   return (
+    // <ThemeProvider theme={theme}>
     <ApolloProvider client={client}>
     <Router>
       
@@ -47,6 +48,7 @@ const App = () => {
 
     </Router>
     </ApolloProvider>
+    // </ThemeProvider>
   );
 };
 

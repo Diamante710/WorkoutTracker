@@ -8,7 +8,9 @@ import { useMutation } from '@apollo/client';
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   const [showAlert, setShowAlert] = useState(false);
-  const [createUser] = useMutation(CREATE_USER);
+
+  const [ createUser, {error} ] = useMutation(CREATE_USER)
+ 
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
