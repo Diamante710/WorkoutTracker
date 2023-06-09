@@ -4,20 +4,30 @@ const typeDefs = gql`
 
 type User {
   _id: ID!
+  username: String!
   email: String!
   password: String!
-  savedWorkouts: [Workout]
-  workoutFrequency: Number
+  exerciseFrequency: Int
+  savedExercises: [Exercise]
 }
 
-type Workout {
-    _Id: ID!
-    name: String!
-    reps: Number!
-    goal reps: Number!
-    weight: Number!
-    goal weight: Number!
-    sets: Number!
+type Exercise {
+    exerciseId: ID!
+    name: String
+    reps: Int
+    goalReps: Int
+    weight: Float
+    goalWeight: Float
+    sets: Int
+}
+
+type ExerciseList {
+  name: String!
+  type: String!
+  muscle: String!
+  equipment: String!
+  difficulty: String!
+  instructions: String!
 }
 
 type Auth {
@@ -25,17 +35,28 @@ type Auth {
     user: User
   }
 
+input ExerciseData {
+  name: String
+  reps: String
+  goalReps: String
+  weight: String
+  goalWeight: String
+  sets: String
+}
+
 type Query {
    me: User
+   exerciseList(searchInput: String): [ExerciseList]
   }
 
 type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth
+    createUser (username: String! email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addWorkout(workoutData: WorkoutData!): User
-    editWorkout(workoutData: WorkoutData!): User
-    saveWorkout(workoutData: WorkoutData!): User
-    deleteWorkout(workoutId: ID!): User
+    addExercise(exerciseData: ExerciseData!): User
+    editExercise(exerciseData: ExerciseData!): User
+    saveExercise(exerciseData: ExerciseData!): User
+    removeExercise(exerciseId: ID!): User
+}
 `;
 
 module.exports = typeDefs;

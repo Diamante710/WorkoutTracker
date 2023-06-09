@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { css } from '@emotion/react';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { CREATE_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
@@ -11,7 +11,15 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  const [ addUser, {error} ] = useMutation(CREATE_USER)
+  const [ addUser, {error} ] = useMutation(CREATE_USER);
+
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [error]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,6 +29,7 @@ const SignupForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -28,7 +37,7 @@ const SignupForm = () => {
     }
 
     try {
-      const { data } = await addUser({variables: {...userFormData}});
+      const { data } = await addUser({variables: { ...userFormData}});
       console.log(data)
       Auth.login(data.createUser.token);
     } catch (err) {
@@ -43,42 +52,18 @@ const SignupForm = () => {
     });
   };
 
-  const formStyle = css`
-  `;
-
-  const groupStyle = css`
-  `;
-
-  const labelStyle = css`
-  `;
-
-  const inputStyle = css`
-  `;
-
-  const feedbackStyle = css`
- `;
-
-  const buttonStyle = css`
-  `;
-
-  const alertStyle = css`
-  `;
-
   return (
     <>
-      <form css={formStyle} noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {showAlert && (
-          <div css={alertStyle}>
-            Something went wrong with your signup!
-          </div>
-        )}
+      {/* This is needed for the validation functionality above */}
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        {/* show alert if server response is bad */}
+        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+          Something went wrong with your signup!
+        </Alert>
 
-        <div css={groupStyle} className='mb-3'>
-          <label css={labelStyle} htmlFor='username'>
-            Username
-          </label>
-          <input
-            css={inputStyle}
+        <Form.Group className='mb-3'>
+          <Form.Label htmlFor='username'>Username</Form.Label>
+          <Form.Control
             type='text'
             placeholder='Your username'
             name='username'
@@ -86,17 +71,12 @@ const SignupForm = () => {
             value={userFormData.username}
             required
           />
-          <div css={feedbackStyle} className='invalid-feedback'>
-            Username is required!
-          </div>
-        </div>
+          <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
+        </Form.Group>
 
-        <div css={groupStyle} className='mb-3'>
-          <label css={labelStyle} htmlFor='email'>
-            Email
-          </label>
-          <input
-            css={inputStyle}
+        <Form.Group className='mb-3'>
+          <Form.Label htmlFor='email'>Email</Form.Label>
+          <Form.Control
             type='email'
             placeholder='Your email address'
             name='email'
@@ -104,17 +84,12 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-          <div css={feedbackStyle} className='invalid-feedback'>
-            Email is required!
-          </div>
-        </div>
+          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+        </Form.Group>
 
-        <div css={groupStyle} className='mb-3'>
-          <label css={labelStyle} htmlFor='password'>
-            Password
-          </label>
-          <input
-            css={inputStyle}
+        <Form.Group className='mb-3'>
+          <Form.Label htmlFor='password'>Password</Form.Label>
+          <Form.Control
             type='password'
             placeholder='Your password'
             name='password'
@@ -122,19 +97,15 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
-          <div css={feedbackStyle} className='invalid-feedback'>
-            Password is required!
-          </div>
-        </div>
-
-        <button
-          css={buttonStyle}
+          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+        </Form.Group>
+        <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
-        >
+          variant='success'>
           Submit
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 };
