@@ -14,7 +14,7 @@ import {
 
 const SavedExercises = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeExercise, { error }] = useMutation(REMOVE_EXERCISE);
+  const [removeExercise] = useMutation(REMOVE_EXERCISE);
 
   const handleRemoveExercise = async (exerciseId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -29,8 +29,7 @@ const SavedExercises = () => {
       });
       // const updatedUser = await data.json();
       // setData(updatedUser);
-      // upon success, remove item from localStorage
-      localStorage.removeItem('exerciseId');
+      // localStorage.removeItem('exerciseId');
       removeExerciseId(exerciseId);
     } catch (err) {
       console.error(err);
