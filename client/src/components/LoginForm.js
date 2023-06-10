@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { css } from '@emotion/react';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [ loginUser, {error} ] = useMutation(LOGIN_USER)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -17,72 +18,50 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     try {
-      const { data } = await loginUser({ variables: { ...userFormData } });
+      const { data } = await loginUser({variables: {...userFormData}});
+      console.log(data)
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
 
-    setUserFormData({ email: '', password: '' });
+    setUserFormData({
+      username: '',
+      email: '',
+      password: '',
+    });
   };
-
-  const formStyle = css`
-    // Add your form styles here
-  `;
-
-  const labelStyle = css`
-    // Add your label styles here
-  `;
-
-  const inputStyle = css`
-    // Add your input styles here
-  `;
-
-  const feedbackStyle = css`
-    // Add your feedback styles here
-  `;
-
-  const buttonStyle = css`
-    // Add your button styles here
-  `;
-
-  const alertStyle = css`
-    // Add your alert styles here
-  `;
 
   return (
     <>
-      <form css={formStyle} noValidate onSubmit={handleFormSubmit}>
-        {showAlert && (
-          <div css={alertStyle} onClose={() => setShowAlert(false)} role='alert'>
-            Something went wrong with your login credentials!
-          </div>
-        )}
-
-        <div>
-          <label css={labelStyle} htmlFor='email'>
-            Email
-          </label>
-          <input
-            css={inputStyle}
-            type='email'
+     <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+          Something went wrong with your login credentials!
+        </Alert>
+        <Form.Group className='mb-3'>
+          <Form.Label htmlFor='email'>Email</Form.Label>
+          <Form.Control
+            type='text'
             placeholder='Your email'
             name='email'
             onChange={handleInputChange}
             value={userFormData.email}
             required
           />
-          {/* <div css={feedbackStyle}>Email is required!</div> */}
-        </div>
+          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+        </Form.Group>
 
-        <div>
-          <label css={labelStyle} htmlFor='password'>
-            Password
-          </label>
-          <input
-            css={inputStyle}
+        <Form.Group className='mb-3'>
+          <Form.Label htmlFor='password'>Password</Form.Label>
+          <Form.Control
             type='password'
             placeholder='Your password'
             name='password'
@@ -90,17 +69,15 @@ const LoginForm = () => {
             value={userFormData.password}
             required
           />
-          {error && <div css={feedbackStyle}>Password is required!</div>}
-        </div>
-
-        <button
-          css={buttonStyle}
+          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+        </Form.Group>
+        <Button
           disabled={!(userFormData.email && userFormData.password)}
           type='submit'
-        >
+          variant='success'>
           Submit
-        </button>
-      </form>
+        </Button>
+      </Form>
     </>
   );
 };

@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_ME = gql`
-  {
+query Query {
     me {
       _id
-      username
       email
+      username
       password
-      savedWorkouts {
-        workoutId
+      savedExercises {
+        exerciseId
         name
         reps
         goalReps
@@ -20,3 +20,16 @@ export const QUERY_ME = gql`
 }
 `;
 
+
+export const QUERY_EXERCISES = gql`
+query Query($searchInput: String) {
+    exerciseList(searchInput: $searchInput) {
+      name
+      type
+      muscle
+      difficulty
+      equipment
+      instructions
+    }
+  }
+`;

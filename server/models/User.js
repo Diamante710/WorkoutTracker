@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import schema from Book.js
-const workoutSchema = require('./Workout');
+const exerciseSchema = require('./Exercise');
 
 const userSchema = new Schema(
   {
@@ -21,7 +21,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    savedWorkout: [workoutSchema],
+    savedExercise: [exerciseSchema],
   },
   {
     toJSON: {
@@ -30,16 +30,9 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.virtual('workoutFrequency').get(
-  function(){
-      return this.savedworkout.length
-  }
-)
-userSchema.pre('save', async function (
-  next
-){
+userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
-      this.password = await bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
   }
   next()
 }) 
@@ -48,6 +41,11 @@ userSchema.pre('save', async function (
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+
+userSchema.virtual('exerciseFrequency').get(function() {
+      return this.savedExercise.length
+  }
+)
 
 const User = model('User', userSchema);
 

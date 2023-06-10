@@ -1,5 +1,18 @@
 import { gql } from '@apollo/client';
 
+export const CREATE_USER = gql`
+mutation createUser($email: String!, $password: String!, $username: String!) {
+  createUser(email: $email, password: $password, username: $username) {
+      token
+      user {
+      _id
+      username
+      email
+      }
+    }
+  }
+`;
+
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -12,30 +25,20 @@ export const LOGIN_USER = gql`
     }
   }
 `;
-export const CREATE_USER = gql`
-  mutation createUser($username: String!, $email: String!, $password: String!) {
-    createUser(username: $username, email: $email, password: $password) {
-      token
-      user {
+
+export const SAVE_EXERCISE = gql`
+  mutation saveExercise($exerciseData: ExerciseInput!) {
+    saveExercise(exerciseData: $exerciseData) {
       _id
       username
       email
-      }
-    }
-  }
-`;
-export const SAVE_WORKOUT = gql`
-  mutation saveWorkout($workoutData: WorkoutInput!) {
-    saveWorkout(workoutData: $workoutData) {
-      _id
-      username
-      email
-      savedWorkouts {
-        workoutId
+      password
+      savedExercises {
+        exerciseId
         name
-       reps
-       goalReps
-       weight
+        reps
+        goalReps
+        weight
         goalWeight
         sets
       }
@@ -43,18 +46,19 @@ export const SAVE_WORKOUT = gql`
     }`
   ;
 
-export const REMOVE_WORKOUT = gql`
-  mutation removeWorkout($workoutId: ID!) {
-    removeWorkout(workoutId: $workoutId) {
+export const REMOVE_EXERCISE = gql`
+  mutation removeExercise($exerciseId: ID!) {
+    removeExercise(exerciseId: $exerciseId) {
       _id
       username
       email
-      savedWorkouts {
-        workoutId
+      password
+      savedExercises {
+        exerciseId
         name
-       reps
-       goalReps
-       weight
+        reps
+        goalReps
+        weight
         goalWeight
         sets
       }
@@ -62,18 +66,19 @@ export const REMOVE_WORKOUT = gql`
   }`
   ;
 
-export const ADD_WORKOUT = gql`
-  mutation addWorkout($workoutId: ID!) {
-    addWorkout(workoutId: $workoutId) {
+export const ADD_EXERCISE = gql`
+  mutation addExercise($exerciseId: ID!) {
+    addExercise(exerciseId: $exerciseId) {
       _id
       username
       email
-      savedWorkouts {
-        workoutId
+      password
+      savedExercises {
+        exerciseId
         name
-       reps
-       goalReps
-       weight
+        reps
+        goalReps
+        weight
         goalWeight
         sets
       }
@@ -81,18 +86,19 @@ export const ADD_WORKOUT = gql`
   }`
   ;
 
-  export const EDIT_WORKOUT = gql`
-  mutation editWorkout($workoutId: ID!) {
-    editWorkout(workoutId: $workoutId) {
+  export const EDIT_EXERCISE = gql`
+  mutation editExercise($exerciseId: ID!) {
+    editExercise(exerciseId: $exerciseId) {
       _id
       username
       email
-      savedWorkouts {
-        workoutId
+      password
+      savedExercises {
+        exerciseId
         name
-       reps
-       goalReps
-       weight
+        reps
+        goalReps
+        weight
         goalWeight
         sets
       }

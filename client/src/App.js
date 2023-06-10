@@ -1,54 +1,50 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import NavTabs from './components/Navtabs';
-import SignupForm from './components/SignupForm';
-import LoginForm from './components/LoginForm';
-import UserHomepage from './components/UserHomepage';
-import { ApolloClient,InMemoryCache, ApolloProvider } from '@apollo/client';
+import UserPage from '../src/components/UserPage';
+import SavedExercise from '../src/pages/SavedExecises';
+import SearchExercise from '../src/pages/SearchExercise';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
-  cache: new InMemoryCache()
+const httpLink = createHttpLink({
+  uri: '/graphql',
 });
 
-const App = () => {
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
+  });
+  
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+  });
+
+function App() {
   return (
-    // <ThemeProvider theme={theme}>
     <ApolloProvider client={client}>
     <Router>
-      
-      <div>
-        <Header />
-
-          <Routes>
-            <Route
-            index
-            path="/"
-            element={<NavTabs />}
-            />
-            
-            <Route
-              path="/UserHomepage"
-              element={<UserHomepage />} />
-
-            <Route
-              path="/SignupForm"
-              element={<SignupForm />}
-            />
-
-            <Route
-              path="/LoginForm"
-              element={<LoginForm />}
-            />
-
-          </Routes>
-       
-      </div>
-
+      <>
+        <NavTabs/>
+        <Routes>
+          <Route path="/" element={<SearchExercise/>}/>
+          <Route path="/user" element={<UserPage/>}/>
+          <Route path="/saved" element={<SavedExercise/>}/>
+          <Route
+            path='*'
+            element={<h1 className="display-2">Wrong Page!</h1>}
+          />
+        </Routes>
+        </>
     </Router>
     </ApolloProvider>
-    // </ThemeProvider>
   );
 };
 
