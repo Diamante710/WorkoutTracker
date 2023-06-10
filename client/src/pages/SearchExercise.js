@@ -1,5 +1,5 @@
 import React, {  useState, useEffect } from 'react';
-import { useLazyQuery, useQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { SAVE_EXERCISE } from "../utils/mutations";
 // import { css } from '@emotion/react';
 import { QUERY_EXERCISES } from "../utils/queries";
@@ -24,7 +24,7 @@ const SearchExercises = () => {
   const [savedExerciseIds, setSavedExerciseIds] = useState(getSavedExerciseIds());
 
   const [saveExercise, { error }] = useMutation(SAVE_EXERCISE);
-  const [ getExercises, {loading, data}] = useLazyQuery(QUERY_EXERCISES,
+  const [getExercises, {loading, data}] = useLazyQuery(QUERY_EXERCISES,
     {
       variables: {searchInput: searchInput}
     });  

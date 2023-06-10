@@ -20,7 +20,6 @@ query Query {
 }
 `;
 
-
 export const QUERY_EXERCISES = gql`
 query Query($searchInput: String) {
     exerciseList(searchInput: $searchInput) {
