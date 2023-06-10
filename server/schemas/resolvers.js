@@ -1,5 +1,4 @@
-const { User } = require('../models');
-const { Exercise } = require('../models/Exercise');
+const { User, Exercise } = require('../models');
 const { AuthenthicationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 require('dotenv').config();
@@ -30,7 +29,7 @@ const resolvers = {
               return result; // Assuming the response is JSON
             } catch (error) {
               console.error(error);
-              throw new Error('Failed to fetch biceps exercises');
+              throw new Error('Failed to fetch exercises');
             }
           },
     },
