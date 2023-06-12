@@ -2,7 +2,7 @@ const { User, Exercise } = require('../models');
 const { AuthenthicationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 require('dotenv').config();
-
+console.log(User)
 const resolvers = {
     Query: {
         me: async (parent, args, context) => {
@@ -35,63 +35,70 @@ const resolvers = {
     },
 
     Mutation: {
-        createUser: async (parent, args) => {
-            const user = await User.create(args);
-            const token = signToken(user);
-            return {token, user};
-          },
-
+        addUser: async (parent, args) => {
+            console.log(User)
+          const user = await User.create(args);
+          const token = signToken(user);
+          return { token, user };
+        },
+      
         login: async (parent, { email, password }) => {
-            const user = await User.findOne({ email });
-
-            if (user) {
-                const correctPassword = await user.isCorrectPassword(password);
-
-                if (correctPassword) {
-                    const token = signToken(user);
-                    return { token, user };
-                }
+          const user = await User.findOne({ email });
+      
+          if (user) {
+            const correctPassword = await user.isCorrectPassword(password);
+      
+            if (correctPassword) {
+              const token = signToken(user);
+              return { token, user };
             }
+          }
         },
-
+      
         addExercise: async (parent, args) => {
-                const exercise = await Exercise.create(args);
-                return { exercise };
+          const exercise = await Exercise.create(args);
+          return { exercise };
         },
-
-        editExercise: async (parent, args, context) => {
-            if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $push: { savedExercises: args }},
-                    { new: true }
-                );
-                return updatedUser;
-            };
+      
+        editExercise: async (parent, { exerciseData }, context) => {
+          if (context.user) {
+            const updatedUser = await User.findOneAndUpdate(
+              { _id: context.user._id },
+              { $push: { savedExercises: exerciseData } },
+              { new: true }
+            );
+            return updatedUser;
+          } else {
+            throw new AuthenticationError('Not logged in');
+          }
         },
-
+      
         saveExercise: async (parent, { exerciseData }, context) => {
-            if (context.user) {
-                const updatedUser = await User.findByIdAndUpdate(
-                    { _id: context.user._id },
-                    { $push: { savedExercises: exerciseData }},
-                    { new: true }
-                );
-                return updatedUser;
-            };
+          if (context.user) {
+            const updatedUser = await User.findByIdAndUpdate(
+              { _id: context.user._id },
+              { $push: { savedExercises: exerciseData } },
+              { new: true }
+            );
+            return updatedUser;
+          } else {
+            throw new AuthenticationError('Not logged in');
+          }
         },
-        
-        removeExercise: async (parent, {exerciseId}, context) => {
-            if (context.user) {
-                const updatedUser = await User.findByIdAndUpdate(
-                    { _id: context.user._id },
-                    { $pull: { savedExercises: { exerciseId } }},
-                    { new: true }
-                );
-                return updatedUser;
-            }
-        }
-    }
-};
+      
+        removeExercise: async (parent, { exerciseId }, context) => {
+          if (context.user) {
+            const updatedUser = await User.findByIdAndUpdate(
+              { _id: context.user._id },
+              { $pull: { savedExercises: { exerciseId } } },
+              { new: true }
+            );
+            return updatedUser;
+          } else {
+            throw new AuthenticationError('Not logged in');
+          }
+        },
+      }
+    };      
 
 module.exports = resolvers;
