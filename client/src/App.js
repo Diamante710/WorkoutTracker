@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import NavTabs from './components/Navtabs';
-import UserPage from '../src/components/UserPage';
+import ExerciseHistory from '../src/pages/ExerciseHistory';
 import SavedExercise from '../src/pages/SavedExecises';
 import SearchExercise from '../src/pages/SearchExercise';
 
@@ -35,7 +35,7 @@ function App() {
         <NavTabs/>
         <Routes>
           <Route path="/" element={<SearchExercise/>}/>
-          <Route path="/user" element={<UserPage/>}/>
+          <Route path="/history" element={<ExerciseHistory/>}/>
           <Route path="/saved" element={<SavedExercise/>}/>
           <Route
             path='*'

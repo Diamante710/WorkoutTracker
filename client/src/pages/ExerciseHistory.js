@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UserHomepage = () => {
+const ExerciseHistory = () => {
   const [exercises, setExercises] = useState([]);
   const [name, setName] = useState('');
   const [repsAchieved, setRepsAchieved] = useState('');
@@ -33,7 +33,7 @@ const UserHomepage = () => {
 
   return (
     <div>
-      <h2>Welcome to the User Homepage</h2>
+      <h2>Track Your Progress!</h2>
       <div>
         <h3>Add New Exercise</h3>
         <form onSubmit={handleAddExercise}>
@@ -156,4 +156,4 @@ const UserHomepage = () => {
   );
 };
 
-export default UserHomepage;
+export default ExerciseHistory;
