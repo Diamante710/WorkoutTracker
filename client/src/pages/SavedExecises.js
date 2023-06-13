@@ -15,7 +15,7 @@ import {
 const SavedExercises = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [removeExercise] = useMutation(REMOVE_EXERCISE);
-
+  console.log(data?.me);
   const handleRemoveExercise = async (exerciseId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 

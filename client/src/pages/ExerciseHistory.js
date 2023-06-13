@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { SAVE_EXERCISE } from '../utils/mutations';
 
 const ExerciseHistory = () => {
   const [exercises, setExercises] = useState([]);
@@ -7,6 +9,7 @@ const ExerciseHistory = () => {
   const [goalReps, setGoalReps] = useState('');
   const [weightAchieved, setWeightAchieved] = useState('');
   const [goalWeight, setGoalWeight] = useState('');
+  const [saveExercises, {error} ] = useMutation(SAVE_EXERCISE);
 
   const handleAddExercise = (e) => {
     e.preventDefault();
@@ -24,6 +27,7 @@ const ExerciseHistory = () => {
     setWeightAchieved('');
     setGoalWeight('');
   };
+
 
   const handleEditExercise = (index, field, value) => {
     const updatedExercises = [...exercises];
@@ -91,13 +95,14 @@ const ExerciseHistory = () => {
         <h3>Exercise List</h3>
         <table>
           <thead>
-            <ol>
-              <li>Name</li>
-              <li>Reps Achieved</li>
-              <li>Goal Reps</li>
-              <li>Weight Achieved</li>
-              <li>Goal Weight</li>
-            </ol>
+            <tr>
+
+              <th>Name</th>
+              <th>Reps Achieved</th>
+              <th>Goal Reps</th>
+              <th>Weight Achieved</th>
+              <th>Goal Weight</th>
+            </tr>
           </thead>
           <tbody>
             {exercises.map((exercise, index) => (
