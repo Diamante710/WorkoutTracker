@@ -36,7 +36,8 @@ Express.js
 JWT Authentication
 ```
 
-## <a name="Screenshot"></a>Screenshot
+## <a name="Screenshot"></a>Screenshot<img width="1440" alt="Screen Shot 2023-06-12 at 8 21 44 PM" src="https://github.com/Diamante710/WorkoutTracker/assets/104117567/5d28645d-1588-42b7-a808-b7a0efce14e6">
+
 
 
 
