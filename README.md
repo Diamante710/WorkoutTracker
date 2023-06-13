@@ -11,7 +11,7 @@
 
 ## <a name="Heroku Deployment"></a>Heroku Deployment
 
-https://git.heroku.com/vast-stream-29505.git
+https://sheltered-headland-81990.herokuapp.com/
 
 ## <a name="Task"></a>Task
 
@@ -45,6 +45,5 @@ JWT Authentication
 Please feel free to contact one or all of us with any comments or concerns through one of the GitHub links provided below:
 
 https://github.com/Yoel211
-https://github.com/JJGAvery
 https://github.com/Paulddncn
 https://github.com/Diamante710

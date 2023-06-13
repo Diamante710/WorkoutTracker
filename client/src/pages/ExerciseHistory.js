@@ -39,7 +39,7 @@ const ExerciseHistory = () => {
     <div>
       <h2>Track Your Progress!</h2>
       <div>
-        <h3>Add New Exercise</h3>
+        <h3>Add A New Exercise</h3>
         <form onSubmit={handleAddExercise}>
           <div>
             <label>Exercise Name:</label>
@@ -92,19 +92,8 @@ const ExerciseHistory = () => {
         </form>
       </div>
       <div>
-        <h3>Exercise List</h3>
+        <h3>Exercise History</h3>
         <table>
-          <thead>
-            <tr>
-
-              <th>Name</th>
-              <th>Reps Achieved</th>
-              <th>Goal Reps</th>
-              <th>Weight Achieved</th>
-              <th>Goal Weight</th>
-            </tr>
-          </thead>
-          <tbody>
             {exercises.map((exercise, index) => (
               <tr key={index}>
                 <td>
